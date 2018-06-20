@@ -13,6 +13,7 @@ namespace ApiAsi.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PropostaSubmetida()
         {
+           
             CandidaturaAluno = new HashSet<CandidaturaAluno>();
             Coorientador = new HashSet<Coorientador>();
             Proposta = new HashSet<Proposta>();
@@ -25,6 +26,7 @@ namespace ApiAsi.Models
         [StringLength(25)]
         public string titulo { get; set; }
 
+        [JsonIgnore]
         [Required]
         [StringLength(25)]
         public string palavras_chaves { get; set; }
@@ -33,14 +35,17 @@ namespace ApiAsi.Models
         [StringLength(500)]
         public string objetivo { get; set; }
 
+        [JsonIgnore]
         [Required]
         [StringLength(1000)]
         public string descricao_adicional { get; set; }
 
+        [JsonIgnore]
         [Required]
         [StringLength(1000)]
         public string metodologia { get; set; }
 
+        [JsonIgnore]
         [Required]
         [StringLength(500)]
         public string recursos_necessarios { get; set; }
@@ -51,6 +56,7 @@ namespace ApiAsi.Models
         [JsonIgnore]
         public bool criadaaluno { get; set; }
 
+        [JsonIgnore]
         [Required]
         [StringLength(128)]
         public string fk_user { get; set; }
@@ -76,10 +82,11 @@ namespace ApiAsi.Models
         [JsonIgnore]
         public virtual ProfessorValido ProfessorValido { get; set; }
 
-
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Proposta> Proposta { get; set; }
 
+        [JsonIgnore]
         public virtual User User { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 namespace ApiAsi.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -12,8 +13,10 @@ namespace ApiAsi.Models
         [Key]
         public int id_messsenger { get; set; }
 
+        [JsonIgnore]
         public int fk_proposta { get; set; }
 
+       
         public virtual Proposta Proposta { get; set; }
     }
 }

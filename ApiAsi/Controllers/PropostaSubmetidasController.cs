@@ -13,6 +13,7 @@ using ApiAsi.Models;
 
 namespace ApiAsi.Controllers
 {
+    [Authorize]
     public class PropostaSubmetidasController : ApiController
     {
         private BancoContext db = new BancoContext();
