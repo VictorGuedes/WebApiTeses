@@ -98,3 +98,7 @@ C:\Users\victo\source\repos\ApiAsi\ApiAsi\obj\Debug\ApiAsi.csproj.CoreCompileInp
 C:\Users\victo\source\repos\ApiAsi\ApiAsi\obj\Debug\ApiAsi.dll
 C:\Users\victo\source\repos\ApiAsi\ApiAsi\obj\Debug\ApiAsi.pdb
 C:\Users\victo\source\repos\ApiAsi\ApiAsi\obj\Debug\ApiAsi.csprojResolveAssemblyReference.cache
+C:\Users\victo\source\repos\ApiAsi\ApiAsi\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\victo\source\repos\ApiAsi\ApiAsi\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\victo\source\repos\ApiAsi\ApiAsi\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\victo\source\repos\ApiAsi\ApiAsi\bin\Microsoft.AspNet.SignalR.SystemWeb.xml

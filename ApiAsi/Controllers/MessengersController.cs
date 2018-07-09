@@ -43,26 +43,71 @@ namespace ApiAsi.Controllers
         [HttpGet]
         public IHttpActionResult GetAllChatsUser(string idUser)
         {
-            var q = from propostaSubmetida in db.PropostaSubmetida
-                        join proposta in db.Proposta on propostaSubmetida.id_proposta_submetida equals proposta.fk_propostasubmetida
-                        join messenger in db.Messenger on proposta.id_proposta equals messenger.fk_proposta
-                        join userX in db.User on idUser equals userX.Id
-                        select new
-                        {
-                            messenger.id_messsenger,
-                            propostaSubmetida.titulo,
-                            proposta.Aluno.nome,
-                            userX.Aluno,
-                            userX.Professor
-                        };
+            
+            var listaChatAluno = (from messenger in db.Messenger
+                    from proposta in db.Proposta
+                    from propostaSubmetida in db.PropostaSubmetida
+                    from user in db.User
+                    from aluno in db.Aluno
+                    where messenger.fk_proposta == proposta.id_proposta
+                    where proposta.fk_propostasubmetida == propostaSubmetida.id_proposta_submetida
+                    where proposta.fk_aluno == aluno.numero_mecanografico
+                    where aluno.fk_user_login == idUser
+                    select new
+                    {
+                        messenger.id_messsenger,
+                        propostaSubmetida.titulo,
+                        proposta.Aluno.nome
 
-            if (q == null)
+                    }).Distinct().ToList();
+
+            if (listaChatAluno.Count == 0)
             {
-                return NotFound();
+                var listaChatOrientador = (from messenger in db.Messenger
+                                           from proposta in db.Proposta
+                                           from propostaSubmetida in db.PropostaSubmetida
+                                           from user in db.User
+                                           from professor in db.Professor
+                                           from professorValido in db.ProfessorValido
+                                           where messenger.fk_proposta == proposta.id_proposta
+                                           where proposta.fk_propostasubmetida == propostaSubmetida.id_proposta_submetida
+                                           where propostaSubmetida.orientador == professorValido.id_atribuicao
+                                           where professorValido.fk_professor == professor.numero_meca
+                                           where professor.fk_user == idUser
+                                           select new
+                                           {
+                                               messenger.id_messsenger,
+                                               propostaSubmetida.titulo,
+                                               proposta.Aluno.nome
+                                           }).Distinct().ToList();
+
+                var listaChatCoorientador = (from messenger in db.Messenger
+                                            from proposta in db.Proposta
+                                            from propostaSubmetida in db.PropostaSubmetida
+                                            from user in db.User
+                                            from professor in db.Professor
+                                            from professorValido in db.ProfessorValido
+                                            from coordientador in db.Coorientador
+                                            where messenger.fk_proposta == proposta.id_proposta
+                                            where proposta.fk_propostasubmetida == propostaSubmetida.id_proposta_submetida
+                                            where professorValido.id_atribuicao == coordientador.fk_professor_professor_val
+                                            where coordientador.fk_proposta_submetida == propostaSubmetida.id_proposta_submetida
+                                            where professorValido.fk_professor == professor.numero_meca
+                                            where professor.fk_user == idUser 
+                                            select new
+                                            {
+                                                messenger.id_messsenger,
+                                                propostaSubmetida.titulo,
+                                                proposta.Aluno.nome
+                                            }).Distinct().ToList();
+
+                listaChatOrientador.AddRange(listaChatCoorientador);
+                return Ok(listaChatOrientador);
             }
-
-            return Ok(q);
-
+            else
+            {
+                return Ok(listaChatAluno);
+            }
         }
 
         // PUT: api/Messengers/5
